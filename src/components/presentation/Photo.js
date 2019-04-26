@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity } from 'react-native'
-import { S3Image } from 'aws-amplify-react-native';
+import { View, Dimensions } from 'react-native'
 import { BottomBar } from '../container';
+import Gallery from 'react-native-image-gallery';
 
 class Photo extends Component {
 
@@ -9,11 +9,20 @@ class Photo extends Component {
         super(props)
 
         this.state = {
-            width: 0,
-            height: 0,
-            hideBottonBar: true,
+            hideBottonBar: false,
 
         }
+        console.log('PhotoConstructor', this.props.listIndex)
+
+
+    }
+
+    onChangeImage = (index) => {
+        console.log('onChangeImage', index)
+        this.setState({
+            imgKey: this.props.data[index].key,
+            hideBottonBar: false,
+        })
     }
 
     hideBottonBar = () => {
@@ -24,27 +33,27 @@ class Photo extends Component {
 
     render() {
         return (
-            <View style={{backgroundColor: 'rgb(0,0,0)'}}>
-                <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={this.hideBottonBar}
-                >
+            <View style={{ width: '100%', height: '100%' }}>
 
-                    <S3Image
-                        style={{
-                            width: '100%',
-                            height: '100%'
-                        }}
-                        level='private'
-                        imgKey={this.props.imgKey}
-                        resizeMode='contain'
-                    />
-                </TouchableOpacity>
+                <Gallery
+                    style={{ flex: 1, backgroundColor: 'black' }}
+                    images={this.props.data}
+                    initialPage={this.props.listIndex}
+                    flatListProps={{
+                        initialNumToRender: 5,
+                        initialScrollIndex: this.props.listIndex,
+                        getItemLayout: (data, index) => ({
+                            length: Dimensions.get('screen').width, offset: Dimensions.get('screen').width * index, index
+                        })
+                    }}
+                    onSingleTapConfirmed={this.hideBottonBar}
+                    onPageSelected={this.onChangeImage}
+                />
 
                 {/* if hideBottomBar is true render component, else null */}
                 {this.state.hideBottonBar
                     ? <BottomBar
-                        imgKey={this.props.imgKey}
+                        imgKey={this.state.imgKey}
                     />
                     : null}
 

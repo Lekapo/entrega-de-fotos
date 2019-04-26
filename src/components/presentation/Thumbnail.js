@@ -28,7 +28,13 @@ class Thumbnail extends Component {
 
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => this.props.navigation.navigate('photoScreen', { key: this.props.item, listIndex: this.props.index })}>
+                onPress={() => this.props.navigation.navigate(
+                    'photoScreen',
+                    {
+                        key: this.props.item,
+                        listIndex: this.props.index,
+                        data: this.props.data,
+                    })}>
 
                 <S3Image
                     style={{

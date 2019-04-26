@@ -13,7 +13,6 @@ class PhotoAlbum extends Component {
             data: null,
         }
     }
-
     componentDidMount() {
 
         Storage.list('fotos', { level: 'private' })
@@ -23,21 +22,25 @@ class PhotoAlbum extends Component {
                 this.setState({
                     data: result.slice(1)
                 });
+
+                result.slice(1).map((item, index) => {
+                    Storage.get(item.key, { level: 'private' })
+                        .then(result => {
+                            this.state.data[index].source = { uri: result }
+                        })
+                        
+                })
+
             })
             .catch(err => console.log('err', err))
-
-
     }
-
 
     getAlbum = () => {
 
         downloadAlbum(this.state.data)
     }
-
-
-    _renderPhoto({ item, index }) {
-        return <Thumbnail item={item.key} index={index} />
+    _renderPhoto = ({ item, index }) => {
+        return <Thumbnail item={item.key} index={index} data={this.state.data} />
     }
 
 

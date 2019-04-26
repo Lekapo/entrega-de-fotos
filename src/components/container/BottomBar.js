@@ -22,6 +22,8 @@ class BottomBar extends Component {
         const photoTitle = this.props.imgKey.substring(this.props.imgKey.lastIndexOf('/') + 1)
         const path = dirs.DCIMDir + '/Eviel/' + photoTitle
 
+        console.log('bottomImgKey', this.props.imgKey)
+
 
         RNFetchBlob.fs.exists(path)
             .then((exist) => {
