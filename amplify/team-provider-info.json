@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "evielinsta2-20190417134545-authRole",
+            "UnauthRoleArn": "arn:aws:iam::202549041073:role/evielinsta2-20190417134545-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::202549041073:role/evielinsta2-20190417134545-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "evielinsta2-20190417134545-deployment",
+            "UnauthRoleName": "evielinsta2-20190417134545-unauthRole",
+            "StackName": "evielinsta2-20190417134545",
+            "StackId": "arn:aws:cloudformation:us-east-1:202549041073:stack/evielinsta2-20190417134545/3f648eb0-6130-11e9-b962-0e27f3a268d6"
+        },
+        "categories": {
+            "auth": {
+                "cognito5d3c5983": {}
+            }
+        }
+    }
+}
