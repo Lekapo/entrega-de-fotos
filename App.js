@@ -5,6 +5,8 @@ import Amplify, { Analytics } from 'aws-amplify';
 // Get the aws resources configuration parameters
 import aws_exports from './aws-exports'; // if you are using Amplify CLI
 import AppStack from './src/AppStack.js'
+import CustomLoading from './src/login/CustomLoading.js'
+
 
 Amplify.configure(aws_exports);
 // analytics IAM is bugged
@@ -12,11 +14,13 @@ Analytics.disable();
 
 class App extends Component {
   render() {
-    return(
+    return (
       <AppStack />
     );
   }
 }
 
-export default withAuthenticator(App);
+export default withAuthenticator(App, false, [
+  <CustomLoading />,
+]);
 
