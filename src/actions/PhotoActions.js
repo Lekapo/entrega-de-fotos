@@ -82,12 +82,6 @@ export const downloadPhoto = (imgKey) => {
             }
             )
             .catch(err => console.log(err));
-
-
-
     }
-
-
-
     return requestWritePremission()
 }

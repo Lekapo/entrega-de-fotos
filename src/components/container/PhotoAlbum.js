@@ -34,23 +34,18 @@ class PhotoAlbum extends Component {
                             
                             //check if all uri are loaded in state
                             if (this.state.uri[resultLength]) this.setState({ loaded: true })
-
-
                         })
-
-                    
                 })
-
             })
             .catch(err => console.log('err', err))
-
-
     }
 
-    getAlbum = () => {
+    _getAlbum = () => {
 
         downloadAlbum(this.state.data)
     }
+
+
     _renderPhoto = ({ item, index }) => {
         console.log('uri', this.state.uri[index])
         return <Thumbnail
@@ -61,12 +56,7 @@ class PhotoAlbum extends Component {
         />
     }
 
-
     render() {
-
-
-
-
         return (
             <View style={{
                 flex: 1,
@@ -75,14 +65,13 @@ class PhotoAlbum extends Component {
             }}>
                 {this.state.loaded ?
                     <View>
-                        <Button onPress={() => this.getAlbum()} title='Download Tudo' />
+                        <Button onPress={() => this._getAlbum()} title='Download Tudo' />
 
                         <FlatList
                             data={this.state.data}
                             numColumns={3}
                             renderItem={this._renderPhoto}
                         />
-
                     </View>
                     :
                     <ActivityIndicator style={{ alignSelf: 'center' }} size="large" color='rgb(225,225,225)' />

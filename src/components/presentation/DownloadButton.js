@@ -12,8 +12,6 @@ class DownloadButton extends Component {
                 onPress={this.props.getPhoto}
                 disabled={this.props.isDownloaded}
             >
-
-
                 <Image
                     style={{
                         height: 32,

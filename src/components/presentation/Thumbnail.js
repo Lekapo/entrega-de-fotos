@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withNavigation } from 'react-navigation'
 import { TouchableOpacity, Dimensions, StyleSheet, Image, View } from 'react-native'
-import { S3Image } from 'aws-amplify-react-native'
 
 class Thumbnail extends Component {
     constructor(props) {
@@ -27,8 +26,6 @@ class Thumbnail extends Component {
     }
 
     render() {
-
-
         return (
 
             <TouchableOpacity
@@ -64,15 +61,8 @@ class Thumbnail extends Component {
                         }}
                     />
                 }
-
-
             </TouchableOpacity>
         )
-
-
-
     }
 }
-
-
 export default withNavigation(Thumbnail)

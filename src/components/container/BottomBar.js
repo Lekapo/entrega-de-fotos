@@ -14,7 +14,6 @@ class BottomBar extends Component {
             isDownloaded: true,
         }
     }
-
     componentDidMount() {
         
         //Check if photo already exists in device

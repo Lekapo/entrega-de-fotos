@@ -12,11 +12,7 @@ class Photo extends Component {
             hideBottonBar: false,
 
         }
-        console.log('PhotoConstructor', this.props.listIndex)
-
-
     }
-
     onChangeImage = (index) => {
         this.setState({
             imgKey: this.props.data[index].key,
@@ -55,12 +51,8 @@ class Photo extends Component {
                         imgKey={this.state.imgKey}
                     />
                     : null}
-
             </View>
-
-
         )
     }
 }
-
 export default Photo
