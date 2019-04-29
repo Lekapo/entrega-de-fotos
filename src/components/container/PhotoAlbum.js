@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, View, ActivityIndicator } from 'react-native'
 import { Storage } from 'aws-amplify'
 import { Thumbnail } from '../presentation'
 import { downloadAlbum } from '../../actions'
@@ -11,6 +11,8 @@ class PhotoAlbum extends Component {
         super()
         this.state = {
             data: null,
+            uri: [],
+            loaded: false,
         }
     }
     componentDidMount() {
@@ -22,17 +24,27 @@ class PhotoAlbum extends Component {
                 this.setState({
                     data: result.slice(1)
                 });
-
+                const resultLength = result.slice(1).length-1
                 result.slice(1).map((item, index) => {
                     Storage.get(item.key, { level: 'private' })
                         .then(result => {
+
+                            this.state.uri[index] = result
                             this.state.data[index].source = { uri: result }
+                            
+                            //check if all uri are loaded in state
+                            if (this.state.uri[resultLength]) this.setState({ loaded: true })
+
+
                         })
-                        
+
+                    
                 })
 
             })
             .catch(err => console.log('err', err))
+
+
     }
 
     getAlbum = () => {
@@ -40,7 +52,13 @@ class PhotoAlbum extends Component {
         downloadAlbum(this.state.data)
     }
     _renderPhoto = ({ item, index }) => {
-        return <Thumbnail item={item.key} index={index} data={this.state.data} />
+        console.log('uri', this.state.uri[index])
+        return <Thumbnail
+            item={item.key}
+            index={index}
+            data={this.state.data}
+            uri={this.state.uri[index]}
+        />
     }
 
 
@@ -50,13 +68,25 @@ class PhotoAlbum extends Component {
 
 
         return (
-            <View>
-                {this.state.data && <Button onPress={() => this.getAlbum()} title='Download Tudo' />}
-                <FlatList
-                    data={this.state.data}
-                    numColumns={3}
-                    renderItem={this._renderPhoto}
-                />
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                {this.state.loaded ?
+                    <View>
+                        <Button onPress={() => this.getAlbum()} title='Download Tudo' />
+
+                        <FlatList
+                            data={this.state.data}
+                            numColumns={3}
+                            renderItem={this._renderPhoto}
+                        />
+
+                    </View>
+                    :
+                    <ActivityIndicator style={{ alignSelf: 'center' }} size="large" color='rgb(225,225,225)' />
+                }
             </View>
         )
     }

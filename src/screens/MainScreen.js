@@ -19,9 +19,7 @@ class MainScreen extends Component {
 
     render() {
         return (
-            <View>
                 <PhotoAlbum />
-            </View>
         )
     }
 }

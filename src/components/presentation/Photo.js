@@ -18,7 +18,6 @@ class Photo extends Component {
     }
 
     onChangeImage = (index) => {
-        console.log('onChangeImage', index)
         this.setState({
             imgKey: this.props.data[index].key,
             hideBottonBar: false,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withNavigation } from 'react-navigation'
-import { TouchableOpacity, Dimensions, StyleSheet } from 'react-native'
+import { TouchableOpacity, Dimensions, StyleSheet, Image, View } from 'react-native'
 import { S3Image } from 'aws-amplify-react-native'
 
 class Thumbnail extends Component {
@@ -8,7 +8,8 @@ class Thumbnail extends Component {
         super(props)
 
         this.state = {
-            screenWidth: 0
+            screenWidth: 0,
+            loaded: false,
         }
     }
 
@@ -16,12 +17,16 @@ class Thumbnail extends Component {
         this.setState({
             screenWidth: Dimensions.get("window").width / 3 //divided by the number of columns
         })
+
     }
 
-
+    _onLoad = () => {
+        this.setState({
+            loaded: true
+        })
+    }
 
     render() {
-
 
 
         return (
@@ -36,16 +41,30 @@ class Thumbnail extends Component {
                         data: this.props.data,
                     })}>
 
-                <S3Image
+                <Image
                     style={{
                         width: this.state.screenWidth,
                         height: this.state.screenWidth,
                         borderWidth: StyleSheet.hairlineWidth,
                         borderColor: 'rgb(255,255,255)'
                     }}
-                    level='private'
-                    imgKey={this.props.item}
+                    source={{ uri: this.props.uri }}
+                    onLoad={this._onLoad}
                 />
+
+                {!this.state.loaded &&
+                    <View
+                        style={{
+                            width: this.state.screenWidth,
+                            height: this.state.screenWidth,
+                            backgroundColor: 'rgb(225,225,225)',
+                            borderWidth: 1,
+                            borderColor: 'rgb(255,255,255)',
+                            position: 'absolute'
+                        }}
+                    />
+                }
+
 
             </TouchableOpacity>
         )
