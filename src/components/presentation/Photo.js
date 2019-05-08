@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Dimensions } from 'react-native'
 import { BottomBar } from '../container';
 import Gallery from 'react-native-image-gallery';
+import { withNavigation } from 'react-navigation'
 
 class Photo extends Component {
 
@@ -9,18 +10,19 @@ class Photo extends Component {
         super(props)
 
         this.state = {
-            hideBottonBar: false,
-
+            hideBottonBar: true,
         }
     }
-    onChangeImage = (index) => {
+
+
+    _onChangeImage = (index) => {
         this.setState({
             imgKey: this.props.data[index].key,
-            hideBottonBar: false,
+            hideBottonBar: true,
         })
     }
 
-    hideBottonBar = () => {
+    _hideBottonBar = () => {
         this.setState({
             hideBottonBar: !this.state.hideBottonBar,
         })
@@ -41,12 +43,12 @@ class Photo extends Component {
                             length: Dimensions.get('screen').width, offset: Dimensions.get('screen').width * index, index
                         })
                     }}
-                    onSingleTapConfirmed={this.hideBottonBar}
-                    onPageSelected={this.onChangeImage}
+                    onSingleTapConfirmed={this._hideBottonBar}
+                    onPageSelected={this._onChangeImage}
                 />
 
                 {/* if hideBottomBar is true render component, else null */}
-                {this.state.hideBottonBar
+                {!this.state.hideBottonBar
                     ? <BottomBar
                         imgKey={this.state.imgKey}
                     />

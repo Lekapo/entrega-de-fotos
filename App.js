@@ -1,9 +1,8 @@
 
 import React, { Component } from 'react';
-import { withAuthenticator, SignIn } from 'aws-amplify-react-native'; // or 'aws-amplify-react-native';
+import { withAuthenticator, SignIn } from 'aws-amplify-react-native'; 
 import Amplify, { Analytics } from 'aws-amplify';
-// Get the aws resources configuration parameters
-import aws_exports from './aws-exports'; // if you are using Amplify CLI
+import aws_exports from './aws-exports'; 
 import AppStack from './src/AppStack.js'
 import CustomLoading from './src/login/CustomLoading.js'
 
