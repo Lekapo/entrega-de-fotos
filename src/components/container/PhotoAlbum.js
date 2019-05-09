@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FlatList, View, ActivityIndicator } from 'react-native'
 import { Storage } from 'aws-amplify'
-import { Thumbnail } from '../presentation'
+import { Thumbnail, DownloadAlbum } from '../presentation'
 import { downloadAlbum } from '../../actions'
 import { Button } from 'react-native-elements';
 
@@ -24,14 +24,14 @@ class PhotoAlbum extends Component {
                 this.setState({
                     data: result.slice(1)
                 });
-                const resultLength = result.slice(1).length-1
+                const resultLength = result.slice(1).length - 1
                 result.slice(1).map((item, index) => {
                     Storage.get(item.key, { level: 'private' })
                         .then(result => {
 
                             this.state.uri[index] = result
                             this.state.data[index].source = { uri: result }
-                            
+
                             //check if all uri are loaded in state
                             if (this.state.uri[resultLength]) this.setState({ loaded: true })
                         })
@@ -64,8 +64,12 @@ class PhotoAlbum extends Component {
                 alignItems: 'center',
             }}>
                 {this.state.loaded ?
-                    <View>
-                        <Button onPress={() => this._getAlbum()} title='Download Tudo' />
+                    <View style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <DownloadAlbum getAlbum={() => this._getAlbum()} />
 
                         <FlatList
                             data={this.state.data}
