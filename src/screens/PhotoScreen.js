@@ -6,11 +6,27 @@ class PhotoScreen extends Component {
 
     constructor(props) {
       super(props)
+
+      this.props.navigation.setParams({
+        header: false
+    })
+        
+      this.handleToggleTitleBar = this.handleToggleTitleBar.bind(this);
     }
     
 
-    static navigationOptions = {
-        header: null,
+    static navigationOptions = ({ navigation }) => ({
+        header: navigation.state.params.header ? undefined : null,
+        headerTransparent: true,
+        headerStyle: {
+            backgroundColor: 'rgba(245, 245, 245, 0.85)',
+          },
+    })
+
+    handleToggleTitleBar = () => {
+        this.props.navigation.setParams({
+            header: !this.props.navigation.state.params.header
+        })
     }
 
     render() {
@@ -24,7 +40,12 @@ class PhotoScreen extends Component {
             <View>
                 <StatusBar hidden={true} />
 
-                <PhotoContainer imgKey={imgKey} listIndex={listIndex} data={data} />
+                <PhotoContainer
+                    imgKey={imgKey}
+                    listIndex={listIndex}
+                    data={data}
+                    toggleTitleBar={this.handleToggleTitleBar}
+                />
             </View>
         )
     }

@@ -5,7 +5,7 @@ import config from '../../config'
 class DownloadButton extends Component {
     
     render() {
-        const downloadIconColor = (this.props.isDownloaded) ? "rgb(200, 200, 200)" : null
+        const downloadIconColor = (this.props.isDownloaded) ? "rgb(150, 150, 150)" : null
         return (
             <TouchableOpacity
                 activeOpacity={0.4}

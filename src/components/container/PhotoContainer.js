@@ -14,7 +14,12 @@ class PhotoContainer extends Component {
     }
 
     render() {
-        return <Photo imgKey={this.props.imgKey} listIndex={this.props.listIndex} data={this.props.data} />
+        return <Photo
+            imgKey={this.props.imgKey}
+            listIndex={this.props.listIndex}
+            data={this.props.data}
+            toggleTitleBar={this.props.toggleTitleBar}
+        />
     }
 }
 

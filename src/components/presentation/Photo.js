@@ -10,27 +10,29 @@ class Photo extends Component {
         super(props)
 
         this.state = {
-            hideBottonBar: true,
+            toggleBottonBar: true,
         }
     }
 
-
     _onChangeImage = (index) => {
+        this.state.toggleBottonBar ? null : this.props.toggleTitleBar()
         this.setState({
             imgKey: this.props.data[index].key,
-            hideBottonBar: true,
+            toggleBottonBar: true,
         })
+
     }
 
-    _hideBottonBar = () => {
+    _toggleBottonBar = () => {
         this.setState({
-            hideBottonBar: !this.state.hideBottonBar,
+            toggleBottonBar: !this.state.toggleBottonBar,
         })
+        this.props.toggleTitleBar()
     }
 
     render() {
         return (
-            <View style={{ width: '100%', height: '100%' }}>
+            <View style={{ width: '100%', height: '100%', }}>
 
                 <Gallery
                     style={{ flex: 1, backgroundColor: 'black' }}
@@ -43,12 +45,12 @@ class Photo extends Component {
                             length: Dimensions.get('screen').width, offset: Dimensions.get('screen').width * index, index
                         })
                     }}
-                    onSingleTapConfirmed={this._hideBottonBar}
+                    onSingleTapConfirmed={this._toggleBottonBar}
                     onPageSelected={this._onChangeImage}
                 />
 
                 {/* if hideBottomBar is true render component, else null */}
-                {!this.state.hideBottonBar
+                {!this.state.toggleBottonBar
                     ? <BottomBar
                         imgKey={this.state.imgKey}
                     />
