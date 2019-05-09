@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { FlatList, View, ActivityIndicator } from 'react-native'
-import { Storage } from 'aws-amplify'
+import { Storage, Auth } from 'aws-amplify'
 import { Thumbnail, DownloadAlbum } from '../presentation'
 import { downloadAlbum } from '../../actions'
-import { Button } from 'react-native-elements';
 
 class PhotoAlbum extends Component {
 
@@ -17,6 +16,8 @@ class PhotoAlbum extends Component {
     }
     componentDidMount() {
 
+
+
         Storage.list('fotos', { level: 'private' })
             .then(result => {
 
@@ -24,18 +25,31 @@ class PhotoAlbum extends Component {
                 this.setState({
                     data: result.slice(1)
                 });
+
                 const resultLength = result.slice(1).length - 1
-                result.slice(1).map((item, index) => {
-                    Storage.get(item.key, { level: 'private' })
-                        .then(result => {
 
-                            this.state.uri[index] = result
-                            this.state.data[index].source = { uri: result }
+                Auth.currentCredentials({
+                    bypassCache: false  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+                }).then(creds => {
+                    console.log(creds.data.IdentityId)
 
-                            //check if all uri are loaded in state
-                            if (this.state.uri[resultLength]) this.setState({ loaded: true })
-                        })
+                    result.slice(1).map((item, index) => {
+                        uri = 'https://d3b9smnftuknj0.cloudfront.net/private/' + creds.data.IdentityId + '/' + item.key
+                        thumbUri = 'https://d3b9smnftuknj0.cloudfront.net/300x300/private/' + creds.data.IdentityId + '/' + item.key
+    
+    
+                        this.state.uri[index] = thumbUri
+                        this.state.data[index].source = { uri: uri }
+    
+                        //check if all uri are loaded in state
+                        if (this.state.uri[resultLength]) this.setState({ loaded: true })
+                    })
+
+                    
                 })
+                    .catch(err => console.log(err));
+
+                
             })
             .catch(err => console.log('err', err))
     }
@@ -47,7 +61,6 @@ class PhotoAlbum extends Component {
 
 
     _renderPhoto = ({ item, index }) => {
-        console.log('uri', this.state.uri[index])
         return <Thumbnail
             item={item.key}
             index={index}
