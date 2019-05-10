@@ -1,4 +1,4 @@
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import { PermissionsAndroid } from 'react-native'
 import { Storage } from 'aws-amplify'
 
@@ -59,7 +59,7 @@ export const downloadPhoto = (imgKey) => {
                             path: path,
                             useDownloadManager: true, // <-- this is the only thing required
                             // Optional, override notification setting (default to true)
-                            notification: false,
+                            notification: true,
                             // Optional, but recommended since android DownloadManager will fail when
                             // the url does not contains a file extension, by default the mime type will be text/plain
                             mime: 'image/jpg',

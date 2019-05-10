@@ -149,8 +149,8 @@ android {
 }
 
 dependencies {
+    implementation project(':rn-fetch-blob')
     implementation project(':react-native-share')
-    implementation project(':react-native-fetch-blob')
     implementation project(':react-native-gesture-handler')
     implementation project(':amazon-cognito-identity-js')
     implementation fileTree(dir: "libs", include: ["*.jar"])

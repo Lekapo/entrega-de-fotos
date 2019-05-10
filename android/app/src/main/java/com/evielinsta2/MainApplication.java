@@ -3,6 +3,7 @@ package com.evielinsta2;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;

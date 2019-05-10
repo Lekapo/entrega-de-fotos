@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import config from '../../config'
 import { DownloadButton, ShareButton } from '../presentation'
 import { downloadPhoto } from '../../actions'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import Share from 'react-native-share';
 
 class BottomBar extends Component {
