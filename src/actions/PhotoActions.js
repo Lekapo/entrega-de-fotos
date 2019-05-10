@@ -1,5 +1,5 @@
 import RNFetchBlob from 'rn-fetch-blob'
-import { PermissionsAndroid } from 'react-native'
+import { PermissionsAndroid, Platform } from 'react-native'
 import { Storage } from 'aws-amplify'
 
 export const downloadAlbum = (data) => {
@@ -9,8 +9,8 @@ export const downloadAlbum = (data) => {
         let dirs = RNFetchBlob.fs.dirs
         const photoTitle = item.key.substring(item.key.lastIndexOf('/') + 1)
         const path = dirs.DCIMDir + '/Eviel/' + photoTitle
-    
-    
+
+
         RNFetchBlob.fs.exists(path)
             .then((exist) => {
                 exist ? null : downloadPhoto(item.key)
@@ -23,6 +23,9 @@ export const downloadPhoto = (imgKey) => {
 
     async function requestWritePremission() {
         try {
+            if (Platform.OS === 'ios') {
+                return this.fetchPhoto(imgKey);
+            };
             const granted = await PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
                 {
@@ -51,7 +54,9 @@ export const downloadPhoto = (imgKey) => {
 
                 const photoTitle = imgKey.substring(imgKey.lastIndexOf('/') + 1)
                 let dirs = RNFetchBlob.fs.dirs
-                const path = dirs.DCIMDir + '/Eviel/' + photoTitle
+                const dir = Platform.OS === 'android' ? dirs.DCIMDir : dirs.DocumentDir
+                const path = dir + '/Eviel/' + photoTitle
+
 
                 RNFetchBlob
                     .config({
@@ -65,6 +70,7 @@ export const downloadPhoto = (imgKey) => {
                             mime: 'image/jpg',
                             description: 'File downloaded by eviel.'
                         },
+                        path: path
 
                     })
                     .fetch('GET', result, {
@@ -72,13 +78,16 @@ export const downloadPhoto = (imgKey) => {
                     })
                     .then((res) => {
                         // the path should be dirs.DocumentDir + 'path-to-file.anything'
-                        
+                        console.log('res', res)
                         return true
                     })
                     .catch((err) => { console.log('err', err); return false })
             }
             )
-            .catch(err => console.log(err));
+            .catch((err) => { console.log('err', err); return false })
     }
-    return requestWritePremission()
+
+
+    return requestWritePremission();
+
 }

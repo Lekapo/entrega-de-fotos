@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import config from '../../config'
 import { DownloadButton, ShareButton } from '../presentation'
 import { downloadPhoto } from '../../actions'
@@ -20,7 +20,8 @@ class BottomBar extends Component {
         //Check if photo already exists in device
         let dirs = RNFetchBlob.fs.dirs
         const photoTitle = this.props.imgKey.substring(this.props.imgKey.lastIndexOf('/') + 1)
-        const path = dirs.DCIMDir + '/Eviel/' + photoTitle
+        const dir = Platform.OS === 'android' ? dirs.DCIMDir : dirs.DocumentDir
+        const path = dir + '/Eviel/' + photoTitle
 
         RNFetchBlob.fs.exists(path)
             .then((exist) => {
@@ -34,6 +35,7 @@ class BottomBar extends Component {
     getPhoto = () => {
         downloadPhoto(this.props.imgKey)
             .then((res) => {
+                console.log('then')
                 this.setState({
                     isDownloaded: true
                 })
@@ -41,7 +43,6 @@ class BottomBar extends Component {
     }
 
     sharePhoto = () => {
-        let dirs = RNFetchBlob.fs.dirs
 
         RNFetchBlob
             .config({
@@ -58,7 +59,7 @@ class BottomBar extends Component {
                 const shareOptions = {
                     title: 'Compartilhar...',
                     message: 'Compartilhado atraves do app',
-                    url: 'file://' + res.path(),
+                    url: Platform.OS === 'android' ? 'file://' + res.path() : '' + res.path(),
                     type: 'image/jpg',
                 }
 
