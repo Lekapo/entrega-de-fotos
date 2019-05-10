@@ -8,10 +8,11 @@ class MainScreen extends Component {
     static navigationOptions = {
         headerTitle: <LogoTitle />,
         headerRight: (
-            <TouchableOpacity onPress={() => {
-                Auth.signOut();
-            }} 
-            style={{marginRight: 10}}>
+            <TouchableOpacity
+                onPress={() => {
+                    Auth.signOut();
+                }}
+                style={{ marginRight: 10 }}>
                 <Text>SAIR</Text>
             </TouchableOpacity>
         ),
@@ -19,7 +20,7 @@ class MainScreen extends Component {
 
     render() {
         return (
-                <PhotoAlbum />
+            <PhotoAlbum />
         )
     }
 }

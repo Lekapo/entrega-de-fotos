@@ -9,7 +9,7 @@ class DownloadAlbum extends Component {
         return (
             <TouchableOpacity
                 activeOpacity={0.4}
-                onPress={this.props.onPress}
+                onPress={this.props.getAlbum}
                 disabled={this.props.isDownloaded}
                 style={{
                     flexDirection: 'row',
