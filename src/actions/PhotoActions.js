@@ -66,16 +66,13 @@ export const downloadPhoto = (imgKey) => {
                             description: 'File downloaded by eviel.'
                         },
 
-                        // add this option that makes response data to be stored as a file,
-                        // this is much more performant.
-                        fileCache: true,
-
                     })
                     .fetch('GET', result, {
                         //some headers ..
                     })
                     .then((res) => {
                         // the path should be dirs.DocumentDir + 'path-to-file.anything'
+                        
                         return true
                     })
                     .catch((err) => { console.log('err', err); return false })

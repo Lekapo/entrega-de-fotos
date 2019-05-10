@@ -18,6 +18,7 @@ class Photo extends Component {
         this.state.toggleBottonBar ? null : this.props.toggleTitleBar()
         this.setState({
             imgKey: this.props.data[index].key,
+            imgUri: this.props.data[index].source.uri,
             toggleBottonBar: true,
         })
 
@@ -53,6 +54,7 @@ class Photo extends Component {
                 {!this.state.toggleBottonBar
                     ? <BottomBar
                         imgKey={this.state.imgKey}
+                        imgUri={this.state.imgUri}
                     />
                     : null}
             </View>

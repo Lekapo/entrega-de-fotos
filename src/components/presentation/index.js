@@ -3,6 +3,7 @@ import Thumbnail from './Thumbnail'
 import Photo from './Photo'
 import DownloadButton from './DownloadButton'
 import DownloadAlbum from './DownloadAlbum'
+import ShareButton from './ShareButton'
 
 export {
     LogoTitle,
@@ -10,4 +11,5 @@ export {
     Photo,
     DownloadButton,
     DownloadAlbum,
+    ShareButton,
 }

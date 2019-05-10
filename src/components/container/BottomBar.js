@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import config from '../../config'
-import { DownloadButton } from '../presentation'
+import { DownloadButton, ShareButton } from '../presentation'
 import { downloadPhoto } from '../../actions'
 import RNFetchBlob from 'react-native-fetch-blob'
+import Share from 'react-native-share';
 
 class BottomBar extends Component {
 
@@ -15,14 +16,11 @@ class BottomBar extends Component {
         }
     }
     componentDidMount() {
-        
+
         //Check if photo already exists in device
         let dirs = RNFetchBlob.fs.dirs
         const photoTitle = this.props.imgKey.substring(this.props.imgKey.lastIndexOf('/') + 1)
         const path = dirs.DCIMDir + '/Eviel/' + photoTitle
-
-        console.log('bottomImgKey', this.props.imgKey)
-
 
         RNFetchBlob.fs.exists(path)
             .then((exist) => {
@@ -31,22 +29,52 @@ class BottomBar extends Component {
                 })
             })
             .catch((err) => { console.log('err', err) })
-
     }
 
     getPhoto = () => {
-        downloadPhoto(this.props.imgKey).then((res) => {
-
-            this.setState({
-                isDownloaded: true
+        downloadPhoto(this.props.imgKey)
+            .then((res) => {
+                this.setState({
+                    isDownloaded: true
+                })
             })
-        })
+    }
+
+    sharePhoto = () => {
+        let dirs = RNFetchBlob.fs.dirs
+
+        RNFetchBlob
+            .config({
+                fileCache: true,
+                // by adding this option, the temp files will have a file extension
+                appendExt: 'jpg'
+            })
+            .fetch('GET', this.props.imgUri, {
+                //some headers ..
+            })
+            .then((res) => {
+                // Beware that when using a file path as Image source on Android,
+                // you must prepend "file://"" before the file path
+                const shareOptions = {
+                    title: 'Compartilhar...',
+                    message: 'Compartilhado atraves do app',
+                    url: 'file://' + res.path(),
+                    type: 'image/jpg',
+                }
+
+                Share.open(shareOptions)
+                    .then((res) => {
+                        console.log(res)
+                    })
+                    .catch((err) => { err && console.log(err); });
+            })
     }
 
     render() {
         return (
             <View style={styles.userBar}>
                 <DownloadButton getPhoto={this.getPhoto} isDownloaded={this.state.isDownloaded} />
+                <ShareButton sharePhoto={this.sharePhoto} />
             </View>
         )
     }
@@ -61,7 +89,7 @@ const styles = StyleSheet.create({
         height: config.styleConstants.rowHeight,
         backgroundColor: "rgba(245, 245, 245, 0.85)",
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent: "space-evenly",
         alignItems: 'center',
 
     },

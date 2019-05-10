@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, Image, Text } from 'react-native'
+import { TouchableOpacity, Image, Text, StyleSheet } from 'react-native'
 import config from '../../config'
 
 class DownloadAlbum extends Component {
