@@ -5,7 +5,7 @@ import config from '../../config'
 export class LogoTitle extends Component {
     render() {
         return <Image
-            style={{ height: 45, width: 150, }}
+            style={{ height: 40, width: 135, }}
             source={config.images.logoBlack} />
             
     }

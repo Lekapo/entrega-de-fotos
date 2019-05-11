@@ -12,20 +12,26 @@ class DownloadAlbum extends Component {
                 onPress={this.props.getAlbum}
                 disabled={this.props.isDownloaded}
                 style={{
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderColor: '#A7A7AA',
+
                     flexDirection: 'row',
                     padding: 10,
-                    alignContent: 'center',
-                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
                 <Image
                     style={{
+                        marginLeft: 'auto',
                         height: 25,
                         width: 25,
                     }}
                     source={config.images.downloadIcon}
                 />
-                <Text style={{fontSize: 16, marginLeft: 5}}>Baixar album</Text>
+                <Text style={{
+                    fontSize: 16, 
+                    marginLeft: 5, 
+                    marginRight: 'auto' }}>Baixar album</Text>
 
 
             </TouchableOpacity>

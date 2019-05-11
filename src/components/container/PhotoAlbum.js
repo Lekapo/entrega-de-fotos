@@ -78,9 +78,6 @@ class PhotoAlbum extends Component {
             }}>
                 {this.state.loaded ?
                     <View style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
                     }}>
                         <DownloadAlbum getAlbum={() => this._getAlbum()} />
 

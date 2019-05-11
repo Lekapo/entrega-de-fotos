@@ -41,13 +41,8 @@ class Thumbnail extends Component {
                     borderBottomWidth: 1,
                     borderRightWidth: 1,
                     borderColor: 'rgb(255,255,255)'
-
                 }}
-
             >
-
-
-
                 <Image
                     style={{
                         width: this.state.screenWidth,
