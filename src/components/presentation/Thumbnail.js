@@ -36,14 +36,22 @@ class Thumbnail extends Component {
                         key: this.props.item,
                         listIndex: this.props.index,
                         data: this.props.data,
-                    })}>
+                    })}
+                style={{
+                    borderBottomWidth: 1,
+                    borderRightWidth: 1,
+                    borderColor: 'rgb(255,255,255)'
+
+                }}
+
+            >
+
+
 
                 <Image
                     style={{
                         width: this.state.screenWidth,
                         height: this.state.screenWidth,
-                        borderWidth: StyleSheet.hairlineWidth,
-                        borderColor: 'rgb(255,255,255)'
                     }}
                     source={{ uri: this.props.uri }}
                     onLoad={this._onLoad}
